@@ -2,6 +2,7 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
 import List from './models/List';
+import Likes from './models/Likes';
 import { elements, renderLoader, clearLoader } from './views/base';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
@@ -119,6 +120,9 @@ const controlRecipe = async () => {
 
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
 
+
+
+
 /**
  * Shopping List Controller
  */
@@ -149,6 +153,46 @@ elements.shopping.addEventListener('click', e => {
     }
 });
 
+
+
+
+
+/**
+ * LIKES controller
+ */
+const controlLike = () => {
+    if(!state.likes) state.likes = new Likes();
+    const currentId = state.recipe.id;
+
+    // if recipe has NOT yet been liked
+    if(!state.likes.isLiked(currentId)) {
+        // add like to the state
+        const newLike = state.likes.addLike(
+            currentId,
+            state.recipe.title,
+            state.recipe.author,
+            state.recipe.img
+        );
+
+        // change like button
+
+        // add like to UI Like list
+        console.log(state.likes);
+    }
+    // if recipe HAS been liked
+    else {
+        // remove like to the state
+        state.likes.deleteLike(currentId);
+
+        // change like button
+
+        // remove like to UI Like list
+        console.log(state.likes);
+    }
+}
+
+
+
 // update Servings and ingredients
 elements.recipe.addEventListener('click', e => {
     if(e.target.matches('.btn-decrease, .btn-decrease *')) {
@@ -167,9 +211,10 @@ elements.recipe.addEventListener('click', e => {
     else if(e.target.matches('.recipe__btn--add, .recipe__btn--add *')) {
         controlList();
     }
- 
-    console.log(state.recipe);
-    
+    // Like recipe and add it to the LIKES list
+    else if(e.target.matches('.recipe__love, .recipe__love *')) {
+        controlLike();
+    }    
 });
 
 

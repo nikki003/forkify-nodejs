@@ -16,8 +16,6 @@ import * as likesView from './views/likesView';
  *  - likes
  */
 const state = {};
-window.state = state;
-
 
 /**
  *          Search controller
@@ -81,7 +79,6 @@ elements.searchPage.addEventListener('click', e => {
 
 const controlRecipe = async () => {
     const id = window.location.hash.replace('#', '');
-    console.log(id);
     
     if(id) {
         // Prepare UI for changes
@@ -105,7 +102,6 @@ const controlRecipe = async () => {
             state.recipe.calculateServings();
     
             // render the recipe page
-            console.log(state.recipe);
             clearLoader();
             recipeView.renderRecipe(
                 state.recipe,
@@ -157,9 +153,6 @@ elements.shopping.addEventListener('click', e => {
     }
 });
 
-// TESTING
-state.likes = new Likes()
-likesView.toggleLikeMenu(state.likes.getNumLikes());
 
 
 /**
@@ -183,7 +176,6 @@ const controlLike = () => {
         likesView.toggleLikeButton(true);
 
         // add like to UI Like list
-        console.log(newLike);
         likesView.renderLike(newLike);
     }
     // if recipe HAS been liked
@@ -243,6 +235,3 @@ elements.recipe.addEventListener('click', e => {
         controlLike();
     }    
 });
-
-
-window.l = new List();

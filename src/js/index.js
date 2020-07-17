@@ -203,6 +203,23 @@ const controlLike = () => {
 
 
 
+// Restoring Likes data on reload
+window.addEventListener('load', () => {
+    state.likes = new Likes();
+
+    // restore
+    state.likes.readStorage();
+
+    // add like menu button
+    likesView.toggleLikeMenu(state.likes.getNumLikes());
+
+    // render likes
+    state.likes.likes.forEach(like => likesView.renderLike(like));
+})
+
+
+
+
 // update Servings and ingredients
 elements.recipe.addEventListener('click', e => {
     if(e.target.matches('.btn-decrease, .btn-decrease *')) {
